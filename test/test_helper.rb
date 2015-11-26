@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 
 require 'rubygems'
-gem 'activerecord', '>= 2.3.2'
+gem 'activerecord'
 require 'active_record'
 require 'yaml'
 

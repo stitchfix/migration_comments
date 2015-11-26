@@ -5,15 +5,18 @@ module MigrationComments
     end
 
     def render_kv_pair(key, value)
-      if ::ActiveRecord::VERSION::MAJOR <= 3
-        ":#{key} => #{render_value(value)}"
-      else
-        "#{key}: #{render_value(value)}"
-      end
+      "#{key}: #{render_value(value)}"
     end
 
     def render_value(value)
-      value.is_a?(String) ? %Q[#{value}].inspect : value
+      case value
+        when String
+          %Q[#{value}].inspect
+        when Symbol
+          ":#{value}"
+        else
+          value
+      end
     end
   end
 end

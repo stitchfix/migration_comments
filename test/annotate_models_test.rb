@@ -17,6 +17,7 @@ class AnnotateModelsTest < Minitest::Unit::TestCase
       set_column_comment :sample, :field1, "a \"comment\" \\ that ' needs; escaping''"
       add_column :sample, :field3, :string, :null => false, :default => '', :comment => "third column comment"
     end
+    Sample.reset_column_information
 
     result = AnnotateModels.get_schema_info(Sample, TEST_PREFIX)
     expected = <<EOS
@@ -24,14 +25,19 @@ class AnnotateModelsTest < Minitest::Unit::TestCase
 #
 # Table name: sample # a table comment
 #
-#  id     :integer          not null, primary key
-#  field1 :string(255)                            # a "comment" \\ that ' needs; escaping''
+#  id     :integer __SPACES__ not null, primary key
+#  field1 __STR_COL__ __SPACES__ # a "comment" \\ that ' needs; escaping''
 #  field2 :integer
-#  field3 :string(255)      default(""), not null # third column comment
+#  field3 __STR_COL__ __SPACES__ default(""), not null # third column comment
 #
-
 EOS
-    assert_equal expected, result
+    assert_match regex_escaped(expected), result
+  end
+
+  private
+
+  def regex_escaped(expected)
+    /#{Regexp.escape(expected).gsub(/__SPACES__/, ' +').gsub(/__STR_COL__/, ':string(\(255\))?')}/
   end
 end
 
