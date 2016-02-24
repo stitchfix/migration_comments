@@ -7,6 +7,10 @@ rvm:
   - 2.1
   - 2.2
   - 2.3
+env:
+  - DB=mysql
+  - DB=postgres
+  - DB=sqlite
 before_install:
   - gem install bundler
   - sudo service postgresql stop
