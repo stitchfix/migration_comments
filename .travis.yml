@@ -2,19 +2,12 @@ dist: trusty
 sudo: required
 language: ruby
 rvm:
-  - 1.9.3
   - 2.0
   - 2.1
   - 2.2
-  - ruby-head
-env:
-  - DB=mysql
-  - DB=postgres
-  - DB=sqlite
+  - 2.3
 gemfile:
   - Gemfile
-  - gemfiles/rails23.gemfile
-  - gemfiles/rails3.gemfile
   - gemfiles/rails4.gemfile
   - gemfiles/rails5.gemfile
 before_install:
@@ -31,3 +24,8 @@ before_script:
 script:
   - bundle install
   - bundle exec rake test
+env:
+  matrix:
+    - DB=postgres
+    - DB=mysql
+    - DB=sqlite
