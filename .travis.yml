@@ -1,6 +1,8 @@
 language: ruby
 before_script:
   - cp config/database.travis.yml config/database.yml
+  - psql -c 'create database migration_comments_test;' -U postgres
+  - mysql -e 'create database migration_comments_test;'
 script:
   - bundle exec rake test
 services:

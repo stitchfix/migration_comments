@@ -11,6 +11,5 @@ mysql:
 
 sqlite:
   adapter: sqlite3
-  database: test/db/migration_comments_test
-  pool: 5
+  database: ":memory:"
   timeout: 5000
