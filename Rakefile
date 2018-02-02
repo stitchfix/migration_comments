@@ -10,17 +10,11 @@ Rake::TestTask.new do |t|
 end
 
 namespace :test do
-  task all: [:postgres, :mysql, :sqlite]
+  task all: [:sqlite, :postgres]
 
   task :postgres do
     ENV['DB'] = 'postgres'
     puts "\n\nrunning PostgreSQL tests..."
-    Rake::Task['test'].execute
-  end
-
-  task :mysql do
-    ENV['DB'] = 'mysql'
-    puts "\n\nrunning MySQL tests..."
     Rake::Task['test'].execute
   end
 
