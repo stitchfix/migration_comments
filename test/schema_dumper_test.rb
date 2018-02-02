@@ -33,12 +33,12 @@ class SchemaDumperTest < Minitest::Test
     else
       <<-EOS
   create_table "sample", force: :cascade, comment: "a table comment" do |t|
-    t.string  "field1",                           #{render_kv_pair(:comment, %{a \"comment\" \\ that ' needs; escaping''})}
+    t.string "field1", #{render_kv_pair(:comment, %{a \"comment\" \\ that ' needs; escaping''})}
     t.integer "field2"
-    t.string  "field3", #{render_kv_pair(:default, "")}, #{render_kv_pair(:null, false)}, #{render_kv_pair(:comment, "third column comment")}
+    t.string "field3", #{render_kv_pair(:default, "")}, #{render_kv_pair(:null, false)}, #{render_kv_pair(:comment, "third column comment")}
   end
       EOS
-    end
+               end
     assert_match(/#{Regexp.escape(expected).gsub(/__OPTIONS__/, %Q("ENGINE=InnoDB[^"]*"))}/, result)
   end
 
